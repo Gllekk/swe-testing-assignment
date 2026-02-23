@@ -1,7 +1,10 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import javax.swing.*;
@@ -21,6 +24,7 @@ public class Quick_Calc extends JFrame{
     private JButton div;
     private JButton equals;
     private JButton clear;
+    private String operator;
 
     public Quick_Calc() {
         this.setName("Quick Calculator");
@@ -136,6 +140,15 @@ public class Quick_Calc extends JFrame{
         add.setBackground(new Color(18, 33, 36));
         add.setBorder(border1);
         add.setFocusable(false);
+        add.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                operator = "+";
+                add.setForeground(new Color(207, 130, 162));//pink
+                sub.setForeground(new Color(130, 193, 206));
+                mul.setForeground(new Color(130, 193, 206));
+                div.setForeground(new Color(130, 193, 206));
+            }
+        });
         this.add(add);
 
         //subtraction button
@@ -146,6 +159,15 @@ public class Quick_Calc extends JFrame{
         sub.setBackground(new Color(18, 33, 36));
         sub.setBorder(border1);
         sub.setFocusable(false);
+        sub.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                operator = "-";
+                sub.setForeground(new Color(207, 130, 162));//pink
+                add.setForeground(new Color(130, 193, 206));
+                mul.setForeground(new Color(130, 193, 206));
+                div.setForeground(new Color(130, 193, 206));
+            }
+        });
         this.add(sub);
 
         //multiplication button
@@ -156,6 +178,15 @@ public class Quick_Calc extends JFrame{
         mul.setBackground(new Color(18, 33, 36));
         mul.setBorder(border1);
         mul.setFocusable(false);
+        mul.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                operator = "x";
+                mul.setForeground(new Color(207, 130, 162));//pink
+                add.setForeground(new Color(130, 193, 206));
+                sub.setForeground(new Color(130, 193, 206));
+                div.setForeground(new Color(130, 193, 206));
+            }
+        });      
         this.add(mul);
 
         //division button
@@ -166,6 +197,15 @@ public class Quick_Calc extends JFrame{
         div.setBackground(new Color(18, 33, 36));
         div.setBorder(border1);
         div.setFocusable(false);
+        div.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                operator = "/";
+                div.setForeground(new Color(207, 130, 162));//pink
+                add.setForeground(new Color(130, 193, 206));
+                sub.setForeground(new Color(130, 193, 206));
+                mul.setForeground(new Color(130, 193, 206));
+            }
+        });
         this.add(div);
 
         //clear button
@@ -188,6 +228,8 @@ public class Quick_Calc extends JFrame{
         equals.setFocusable(false);
         this.add(equals);
         
+        this.operator = "";
+
         this.validate();
         this.setLayout(null);
         this.setResizable(false);
