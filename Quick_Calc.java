@@ -5,15 +5,14 @@ import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.math.BigInteger;
-import java.math.RoundingMode;
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 
 
-public class Quick_Calc extends JFrame{
+
+public class Quick_Calc extends JFrame {
     private JFrame frame = this;
     private JLabel label;
     private JFormattedTextField numField1;
@@ -27,7 +26,13 @@ public class Quick_Calc extends JFrame{
     private JButton clear;
     private String operator;
 
+    //normal entry-point constructor
     public Quick_Calc() {
+        this(true);
+    }
+
+    //package-private constructor 
+    Quick_Calc(boolean visible) {
         this.setName("Quick Calculator");
         this.setTitle("Quick Calculator");
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -81,7 +86,7 @@ public class Quick_Calc extends JFrame{
                     }
                 });
                 closingDialog.add(no);
-                
+
                 closingDialog.setLayout(null);
                 closingDialog.setLocationRelativeTo(frame);
                 closingDialog.setVisible(true);
@@ -111,7 +116,7 @@ public class Quick_Calc extends JFrame{
         numField1.setCaretColor(new Color(207, 130, 162));
         numField1.addFocusListener(new DigitLimitAndResetFocusListener(19));
         this.add(numField1);
-        
+
         //second numfield
         numField2 = new JFormattedTextField(format);
         numField2.setColumns(13);
@@ -145,7 +150,7 @@ public class Quick_Calc extends JFrame{
         add.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 operator = "+";
-                add.setForeground(new Color(207, 130, 162));//pink
+                add.setForeground(new Color(207, 130, 162));
                 sub.setForeground(new Color(130, 193, 206));
                 mul.setForeground(new Color(130, 193, 206));
                 div.setForeground(new Color(130, 193, 206));
@@ -164,7 +169,7 @@ public class Quick_Calc extends JFrame{
         sub.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 operator = "-";
-                sub.setForeground(new Color(207, 130, 162));//pink
+                sub.setForeground(new Color(207, 130, 162));
                 add.setForeground(new Color(130, 193, 206));
                 mul.setForeground(new Color(130, 193, 206));
                 div.setForeground(new Color(130, 193, 206));
@@ -183,12 +188,12 @@ public class Quick_Calc extends JFrame{
         mul.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 operator = "x";
-                mul.setForeground(new Color(207, 130, 162));//pink
+                mul.setForeground(new Color(207, 130, 162));
                 add.setForeground(new Color(130, 193, 206));
                 sub.setForeground(new Color(130, 193, 206));
                 div.setForeground(new Color(130, 193, 206));
             }
-        });      
+        });
         this.add(mul);
 
         //division button
@@ -202,7 +207,7 @@ public class Quick_Calc extends JFrame{
         div.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 operator = "/";
-                div.setForeground(new Color(207, 130, 162));//pink
+                div.setForeground(new Color(207, 130, 162));
                 add.setForeground(new Color(130, 193, 206));
                 sub.setForeground(new Color(130, 193, 206));
                 mul.setForeground(new Color(130, 193, 206));
@@ -223,17 +228,16 @@ public class Quick_Calc extends JFrame{
                 numField1.setText(null);
                 numField2.setText(null);
                 resultField.setText(null);
-
                 frame.requestFocusInWindow();
             }
         });
         this.add(clear);
-        
+
         //equals button
         equals = new JButton("CALCULATE");
         equals.setBounds(1, 142, 214, 40);
         equals.setFont(new Font("Impact", Font.BOLD, 13));
-        equals.setForeground(new Color(207, 130, 162));//pink
+        equals.setForeground(new Color(207, 130, 162));
         equals.setBackground(new Color(18, 33, 36));
         equals.setBorder(border1);
         equals.setFocusable(false);
@@ -241,7 +245,7 @@ public class Quick_Calc extends JFrame{
         //equals button action
         equals.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                
+
                 if (numField1.getText().equals("") || numField2.getText().equals("")) {
                     okButtonDialog("One or Both Input Fields Are Empty!", "Please, Fill Both Fields Out!");
                     return;
@@ -252,7 +256,8 @@ public class Quick_Calc extends JFrame{
                     okButtonDialog("Only Integers Are Allowed!", "");
                     return;
 
-                } else if (numField1.getText().replaceFirst("^-", "").length() > 18 || numField2.getText().replaceFirst("^-", "").length() > 18) {
+                } else if (numField1.getText().replaceFirst("^-", "").length() > 18
+                        || numField2.getText().replaceFirst("^-", "").length() > 18) {
                     okButtonDialog("Only Integers Of Length Less", "Than 19 Are Allowed!");
                     return;
 
@@ -264,31 +269,12 @@ public class Quick_Calc extends JFrame{
                     BigInteger num1 = new BigInteger(numField1.getText());
                     BigInteger num2 = new BigInteger(numField2.getText());
 
-                    String result = calculate(operator, num1, num2);
-                    if (result != null) {
+                    try {
+                        String result = CalculatorLogic.calculate(operator, num1, num2);
                         resultField.setText(result);
+                    } catch (ArithmeticException ex) {
+                        okButtonDialog("Division By Zero!", "The Divisor Cannot Be Zero!");
                     }
-                    return;
-                }
-            }
-
-            private String calculate(String operator, BigInteger n1, BigInteger n2) {
-                switch (operator) {
-                    case "+":
-                        return n1.add(n2).toString();
-                    case "-":
-                        return n1.subtract(n2).toString();
-                    case "x":
-                        return n1.multiply(n2).toString();
-                    case "/":
-                        if (n2.equals(BigInteger.ZERO)) {
-                            okButtonDialog("Division By Zero!", "The Divisor Cannot Be Zero!");
-                            return null;
-                        }
-                        BigDecimal result = new BigDecimal(n1).divide(new BigDecimal(n2), 10, RoundingMode.HALF_UP).stripTrailingZeros();
-                        return result.toPlainString();
-                    default:
-                        return "0";
                 }
             }
 
@@ -296,7 +282,7 @@ public class Quick_Calc extends JFrame{
                 JDialog dialogNoOperator = new JDialog(frame, "Attention!", true);
                 dialogNoOperator.setSize(262, 105);
                 dialogNoOperator.getContentPane().setBackground(new Color(18, 33, 36));
-    
+
                 //dialog top label1
                 JLabel label1 = new JLabel(text1);
                 label1.setBounds(0, 5, 250, 20);
@@ -321,12 +307,11 @@ public class Quick_Calc extends JFrame{
                 ok.setBackground(new Color(18, 33, 36));
                 ok.setBorder(border2);
                 ok.setFocusable(false);
-
                 ok.addActionListener(new ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         dialogNoOperator.dispose();
                     }
-                });        
+                });
                 dialogNoOperator.add(ok);
 
                 dialogNoOperator.setLayout(null);
@@ -335,15 +320,27 @@ public class Quick_Calc extends JFrame{
             }
         });
         this.add(equals);
-        
-        this.operator = "";
 
+        this.operator = "";
         this.validate();
         this.setLayout(null);
         this.setResizable(false);
-        this.setVisible(true);
+        if (visible) {
+            this.setVisible(true);
+        }
     }
 
+    // Package-private accessors (for integration tests)
+    JFormattedTextField getNumField1()    { return numField1;   }
+    JFormattedTextField getNumField2()    { return numField2;   }
+    JFormattedTextField getResultField()  { return resultField; }
+    JButton             getAddButton()    { return add;         }
+    JButton             getSubButton()    { return sub;         }
+    JButton             getMulButton()    { return mul;         }
+    JButton             getDivButton()    { return div;         }
+    JButton             getEqualsButton() { return equals;      }
+    JButton             getClearButton()  { return clear;       }
+    String              getOperator()     { return operator;    }
 
     public static void main(String[] args) {
         new Quick_Calc();
@@ -360,8 +357,7 @@ class DigitLimitAndResetFocusListener implements FocusListener {
     }
 
     @Override
-    public void focusGained(FocusEvent e) {
-    }
+    public void focusGained(FocusEvent e) {}
 
     @Override
     public void focusLost(FocusEvent e) {
@@ -369,10 +365,8 @@ class DigitLimitAndResetFocusListener implements FocusListener {
         String text = field.getText();
         if (text.length() > limit) {
             field.setText(text.substring(0, limit));
-
         } else if (text.isEmpty()) {
             field.setValue(null);
-
         }
     }
 }
