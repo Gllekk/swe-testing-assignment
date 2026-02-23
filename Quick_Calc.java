@@ -244,6 +244,10 @@ public class Quick_Calc extends JFrame{
                     okButtonDialog("One or Both Input Fields Are Empty!", "Please, Fill Both Fields Out!");
                     return;
 
+                } else if (operator.equals("")) {
+                    okButtonDialog("Please, Choose An Operator!", "");
+                    return;
+
                 } else {
                     BigDecimal num1 = new BigDecimal(numField1.getText());
                     BigDecimal num2 = new BigDecimal(numField2.getText());
