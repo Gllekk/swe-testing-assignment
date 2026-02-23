@@ -11,7 +11,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 
-
 public class Quick_Calc extends JFrame {
     private JFrame frame = this;
     private JLabel label;
@@ -329,7 +328,8 @@ public class Quick_Calc extends JFrame {
         }
     }
 
-    // Package-private accessors (for integration tests)
+
+    //package-private accessors (for integration tests)
     JFormattedTextField getNumField1()    { return numField1;   }
     JFormattedTextField getNumField2()    { return numField2;   }
     JFormattedTextField getResultField()  { return resultField; }
@@ -347,7 +347,7 @@ public class Quick_Calc extends JFrame {
 }
 
 
-// FocusListener for the input fields
+//focusListener for the input fields
 class DigitLimitAndResetFocusListener implements FocusListener {
     private int limit;
 
