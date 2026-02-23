@@ -2,9 +2,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
+
 // internal calulation logic
 public class CalculatorLogic {
-    
     public static String calculate(String operator, BigInteger n1, BigInteger n2) {
         switch (operator) {
             case "+":
@@ -20,9 +20,7 @@ public class CalculatorLogic {
                 if (n2.equals(BigInteger.ZERO)) {
                     throw new ArithmeticException("Division by zero");
                 }
-                BigDecimal result = new BigDecimal(n1)
-                        .divide(new BigDecimal(n2), 10, RoundingMode.HALF_UP)
-                        .stripTrailingZeros();
+                BigDecimal result = new BigDecimal(n1).divide(new BigDecimal(n2), 10, RoundingMode.HALF_UP).stripTrailingZeros();
                 return result.toPlainString();
 
             default:

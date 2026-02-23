@@ -207,8 +207,7 @@ class Quick_Calc_Test {
             });
 
             //confirm the calculation result is correct
-            SwingUtilities.invokeAndWait(() ->
-                    assertEquals("6", calc.getResultField().getText()));
+            SwingUtilities.invokeAndWait(() -> assertEquals("6", calc.getResultField().getText()));
 
             //clear and verify that all the fields are empty
             SwingUtilities.invokeAndWait(() -> clickButton(calc.getClearButton()));

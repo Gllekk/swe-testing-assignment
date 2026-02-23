@@ -101,6 +101,7 @@ public class Quick_Calc extends JFrame {
         label.setBorder(border1);
         this.add(label);
 
+        //number format
         NumberFormat format = NumberFormat.getIntegerInstance();
         format.setGroupingUsed(false);
 
@@ -113,7 +114,7 @@ public class Quick_Calc extends JFrame {
         numField1.setBackground(new Color(18, 33, 36));
         numField1.setBorder(border1);
         numField1.setCaretColor(new Color(207, 130, 162));
-        numField1.addFocusListener(new DigitLimitAndResetFocusListener(19));
+        numField1.addFocusListener(new DigitLimitAndResetFocusListener(18));
         this.add(numField1);
 
         //second numfield
@@ -125,7 +126,7 @@ public class Quick_Calc extends JFrame {
         numField2.setBackground(new Color(18, 33, 36));
         numField2.setBorder(border1);
         numField2.setCaretColor(new Color(207, 130, 162));
-        numField2.addFocusListener(new DigitLimitAndResetFocusListener(19));
+        numField2.addFocusListener(new DigitLimitAndResetFocusListener(18));
         this.add(numField2);
 
         //result field
@@ -320,6 +321,7 @@ public class Quick_Calc extends JFrame {
         this.add(equals);
 
         this.operator = "";
+
         this.validate();
         this.setLayout(null);
         this.setResizable(false);
@@ -330,16 +332,16 @@ public class Quick_Calc extends JFrame {
 
 
     //package-private accessors (for integration tests)
-    JFormattedTextField getNumField1()    { return numField1;   }
-    JFormattedTextField getNumField2()    { return numField2;   }
-    JFormattedTextField getResultField()  { return resultField; }
-    JButton             getAddButton()    { return add;         }
-    JButton             getSubButton()    { return sub;         }
-    JButton             getMulButton()    { return mul;         }
-    JButton             getDivButton()    { return div;         }
-    JButton             getEqualsButton() { return equals;      }
-    JButton             getClearButton()  { return clear;       }
-    String              getOperator()     { return operator;    }
+    JFormattedTextField getNumField1() { return numField1; }
+    JFormattedTextField getNumField2() { return numField2; }
+    JFormattedTextField getResultField() { return resultField; }
+    JButton getAddButton() { return add; }
+    JButton getSubButton() { return sub; }
+    JButton getMulButton() { return mul; }
+    JButton getDivButton() { return div; }
+    JButton getEqualsButton() { return equals; }
+    JButton getClearButton() { return clear; }
+    String  getOperator() { return operator; }
 
     public static void main(String[] args) {
         new Quick_Calc();
@@ -362,6 +364,7 @@ class DigitLimitAndResetFocusListener implements FocusListener {
     public void focusLost(FocusEvent e) {
         JFormattedTextField field = (JFormattedTextField) e.getSource();
         String text = field.getText();
+
         if (text.length() > limit) {
             field.setText(text.substring(0, limit));
         } else if (text.isEmpty()) {
