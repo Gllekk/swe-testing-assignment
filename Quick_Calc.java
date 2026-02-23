@@ -261,6 +261,48 @@ public class Quick_Calc extends JFrame{
                         return BigDecimal.ZERO;
                 }
             }
+
+            private void okButtonDialog(String text1, String text2) {
+                JDialog dialogNoOperator = new JDialog(frame, "Attention!", true);
+                dialogNoOperator.setSize(262, 105);
+                dialogNoOperator.getContentPane().setBackground(new Color(18, 33, 36));
+    
+                //dialog top label1
+                JLabel label1 = new JLabel(text1);
+                label1.setBounds(0, 5, 250, 20);
+                label1.setFont(new Font("Impact", Font.PLAIN, 13));
+                label1.setForeground(new Color(130, 193, 206));
+                label1.setHorizontalAlignment(SwingConstants.CENTER);
+                dialogNoOperator.add(label1);
+
+                //dialog top label2
+                JLabel label2 = new JLabel(text2);
+                label2.setBounds(0, 20, 250, 20);
+                label2.setFont(new Font("Impact", Font.PLAIN, 13));
+                label2.setForeground(new Color(130, 193, 206));
+                label2.setHorizontalAlignment(SwingConstants.CENTER);
+                dialogNoOperator.add(label2);
+
+                //ok button
+                JButton ok = new JButton("OK");
+                ok.setBounds(140, 45, 90, 20);
+                ok.setFont(new Font("Impact", Font.BOLD, 13));
+                ok.setForeground(new Color(207, 130, 162));
+                ok.setBackground(new Color(18, 33, 36));
+                ok.setBorder(border2);
+                ok.setFocusable(false);
+
+                ok.addActionListener(new ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        dialogNoOperator.dispose();
+                    }
+                });        
+                dialogNoOperator.add(ok);
+
+                dialogNoOperator.setLayout(null);
+                dialogNoOperator.setLocationRelativeTo(frame);
+                dialogNoOperator.setVisible(true);
+            }
         });
         this.add(equals);
         
