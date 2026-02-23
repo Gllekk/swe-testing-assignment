@@ -4,6 +4,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
@@ -249,32 +251,34 @@ public class Quick_Calc extends JFrame{
                     return;
 
                 } else {
-                    BigDecimal num1 = new BigDecimal(numField1.getText());
-                    BigDecimal num2 = new BigDecimal(numField2.getText());
+                    BigInteger num1 = new BigInteger(numField1.getText());
+                    BigInteger num2 = new BigInteger(numField2.getText());
 
-                    if (operator.equals("/") && num2.compareTo(BigDecimal.ZERO) == 0) {
-                        okButtonDialog("Division By Zero Is Undefined", "");
-                        return;
+                    String result = calculate(operator, num1, num2);
+                    if (result != null) {
+                        resultField.setText(result);
                     }
-
-                    BigDecimal result = calculate(operator, num1, num2);
-                    resultField.setText(result.stripTrailingZeros().toPlainString());
                     return;
                 }
             }
 
-            private BigDecimal calculate(String operator, BigDecimal n1, BigDecimal n2) {
+            private String calculate(String operator, BigInteger n1, BigInteger n2) {
                 switch (operator) {
                     case "+":
-                        return n1.add(n2);
+                        return n1.add(n2).toString();
                     case "-":
-                        return n1.subtract(n2);
+                        return n1.subtract(n2).toString();
                     case "x":
-                        return n1.multiply(n2);
+                        return n1.multiply(n2).toString();
                     case "/":
-                        return n1.divide(n2, 10, java.math.RoundingMode.HALF_UP);
+                        if (n2.equals(BigInteger.ZERO)) {
+                            okButtonDialog("Division By Zero!", "The Divisor Cannot Be Zero!");
+                            return null;
+                        }
+                        BigDecimal result = new BigDecimal(n1).divide(new BigDecimal(n2), 10, RoundingMode.HALF_UP).stripTrailingZeros();
+                        return result.toPlainString();
                     default:
-                        return BigDecimal.ZERO;
+                        return "0";
                 }
             }
 
