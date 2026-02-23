@@ -98,9 +98,8 @@ public class Quick_Calc extends JFrame{
         label.setBorder(border1);
         this.add(label);
 
-        NumberFormat format = NumberFormat.getNumberInstance();
+        NumberFormat format = NumberFormat.getIntegerInstance();
         format.setGroupingUsed(false);
-        format.setMaximumFractionDigits(10);
 
         //first numfield
         numField1 = new JFormattedTextField(format);
@@ -246,6 +245,12 @@ public class Quick_Calc extends JFrame{
                 
                 if (numField1.getText().equals("") || numField2.getText().equals("")) {
                     okButtonDialog("One or Both Input Fields Are Empty!", "Please, Fill Both Fields Out!");
+                    return;
+
+                } else if (numField1.getText().matches(".*[^0-9].*") || numField2.getText().matches(".*[^0-9].*")) {
+                    numField1.setText(numField1.getText().replaceAll("[^0-9]", ""));
+                    numField2.setText(numField2.getText().replaceAll("[^0-9]", ""));
+                    okButtonDialog("Only Integers Are Allowed!", "");
                     return;
 
                 } else if (numField1.getText().length() > 18 || numField2.getText().length() > 18) {
