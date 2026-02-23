@@ -235,6 +235,33 @@ public class Quick_Calc extends JFrame{
         equals.setBackground(new Color(18, 33, 36));
         equals.setBorder(border1);
         equals.setFocusable(false);
+
+        //equals button action
+        equals.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                BigDecimal num1 = new BigDecimal(numField1.getText());
+                BigDecimal num2 = new BigDecimal(numField2.getText());
+
+                BigDecimal result = calculate(operator, num1, num2);
+                resultField.setText(result.stripTrailingZeros().toPlainString());
+                return;
+            }
+
+            private BigDecimal calculate(String operator, BigDecimal n1, BigDecimal n2) {
+                switch (operator) {
+                    case "+":
+                        return n1.add(n2);
+                    case "-":
+                        return n1.subtract(n2);
+                    case "x":
+                        return n1.multiply(n2);
+                    case "/":
+                        return n1.divide(n2, 10, java.math.RoundingMode.HALF_UP);
+                    default:
+                        return BigDecimal.ZERO;
+                }
+            }
+        });
         this.add(equals);
         
         this.operator = "";
