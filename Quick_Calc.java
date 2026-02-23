@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
@@ -21,14 +22,66 @@ public class Quick_Calc extends JFrame{
     private JButton equals;
     private JButton clear;
 
-
     public Quick_Calc() {
         this.setName("Quick Calculator");
         this.setTitle("Quick Calculator");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(300, 265);
         this.getContentPane().setBackground(new Color(18, 33, 36));
-        Border border = BorderFactory.createLineBorder(new Color(130, 193, 206), 1); //border
+        Border border1 = BorderFactory.createLineBorder(new Color(130, 193, 206), 1);
+        Border border2 = BorderFactory.createLineBorder(new Color(130, 193, 206), 2);
+
+        //window closing dialog
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                JDialog closingDialog = new JDialog(frame, "Attention!", true);
+                closingDialog.setSize(262, 105);
+                closingDialog.getContentPane().setBackground(new Color(18, 33, 36));
+
+                //exit label 
+                JLabel exitLabel = new JLabel("Are You Sure You Want To Exit?");
+                exitLabel.setBounds(0, 5, 250, 20);
+                exitLabel.setFont(new Font("Impact", Font.PLAIN, 13));
+                exitLabel.setForeground(new Color(130, 193, 206));
+                exitLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                closingDialog.add(exitLabel);
+
+                //yes button
+                JButton yes = new JButton("YES");
+                yes.setBounds(10, 45, 90, 20);
+                yes.setFont(new Font("Impact", Font.BOLD, 13));
+                yes.setForeground(new Color(207, 130, 162));
+                yes.setBackground(new Color(18, 33, 36));
+                yes.setBorder(border2);
+                yes.setFocusable(false);
+                yes.addActionListener(new ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        System.exit(0);
+                    }
+                });
+                closingDialog.add(yes);
+
+                //no button
+                JButton no = new JButton("NO");
+                no.setBounds(150, 45, 90, 20);
+                no.setFont(new Font("Impact", Font.BOLD, 13));
+                no.setForeground(new Color(207, 130, 162));
+                no.setBackground(new Color(18, 33, 36));
+                no.setBorder(border2);
+                no.setFocusable(false);
+                no.addActionListener(new ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        closingDialog.dispose();
+                    }
+                });
+                closingDialog.add(no);
+                
+                closingDialog.setLayout(null);
+                closingDialog.setLocationRelativeTo(frame);
+                closingDialog.setVisible(true);
+            }
+        });
 
         //top label
         label = new JLabel("Enter The Numbers And Choose An Operator");
@@ -36,7 +89,7 @@ public class Quick_Calc extends JFrame{
         label.setFont(new Font("Impact", Font.PLAIN, 13));
         label.setForeground(new Color(130, 193, 206));
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setBorder(border);
+        label.setBorder(border1);
         this.add(label);
 
         NumberFormat format = NumberFormat.getNumberInstance();
@@ -50,7 +103,7 @@ public class Quick_Calc extends JFrame{
         numField1.setFont(new Font("Impact", Font.BOLD, 13));
         numField1.setForeground(new Color(207, 130, 162));
         numField1.setBackground(new Color(18, 33, 36));
-        numField1.setBorder(border);
+        numField1.setBorder(border1);
         numField1.setCaretColor(new Color(207, 130, 162));
         this.add(numField1);
         
@@ -61,7 +114,7 @@ public class Quick_Calc extends JFrame{
         numField2.setFont(new Font("Impact", Font.BOLD, 13));
         numField2.setForeground(new Color(207, 130, 162));
         numField2.setBackground(new Color(18, 33, 36));
-        numField2.setBorder(border);
+        numField2.setBorder(border1);
         numField2.setCaretColor(new Color(207, 130, 162));
         this.add(numField2);
 
@@ -71,7 +124,7 @@ public class Quick_Calc extends JFrame{
         resultField.setFont(new Font("Impact", Font.PLAIN, 13));
         resultField.setForeground(new Color(207, 130, 162));
         resultField.setBackground(new Color(18, 33, 36));
-        resultField.setBorder(border);
+        resultField.setBorder(border1);
         resultField.setEditable(false);
         this.add(resultField);
 
@@ -81,7 +134,7 @@ public class Quick_Calc extends JFrame{
         add.setFont(new Font("Impact", Font.PLAIN, 13));
         add.setForeground(new Color(130, 193, 206));
         add.setBackground(new Color(18, 33, 36));
-        add.setBorder(border);
+        add.setBorder(border1);
         add.setFocusable(false);
         this.add(add);
 
@@ -91,7 +144,7 @@ public class Quick_Calc extends JFrame{
         sub.setFont(new Font("Impact", Font.BOLD, 13));
         sub.setForeground(new Color(130, 193, 206));
         sub.setBackground(new Color(18, 33, 36));
-        sub.setBorder(border);
+        sub.setBorder(border1);
         sub.setFocusable(false);
         this.add(sub);
 
@@ -101,7 +154,7 @@ public class Quick_Calc extends JFrame{
         mul.setFont(new Font("Impact", Font.BOLD, 13));
         mul.setForeground(new Color(130, 193, 206));
         mul.setBackground(new Color(18, 33, 36));
-        mul.setBorder(border);
+        mul.setBorder(border1);
         mul.setFocusable(false);
         this.add(mul);
 
@@ -111,7 +164,7 @@ public class Quick_Calc extends JFrame{
         div.setFont(new Font("Impact", Font.BOLD, 13));
         div.setForeground(new Color(130, 193, 206));
         div.setBackground(new Color(18, 33, 36));
-        div.setBorder(border);
+        div.setBorder(border1);
         div.setFocusable(false);
         this.add(div);
 
@@ -121,7 +174,7 @@ public class Quick_Calc extends JFrame{
         clear.setFont(new Font("Impact", Font.BOLD, 13));
         clear.setForeground(new Color(207, 130, 162));
         clear.setBackground(new Color(18, 33, 36));
-        clear.setBorder(border);
+        clear.setBorder(border1);
         clear.setFocusable(false);
         this.add(clear);
         
@@ -131,7 +184,7 @@ public class Quick_Calc extends JFrame{
         equals.setFont(new Font("Impact", Font.BOLD, 13));
         equals.setForeground(new Color(207, 130, 162));//pink
         equals.setBackground(new Color(18, 33, 36));
-        equals.setBorder(border);
+        equals.setBorder(border1);
         equals.setFocusable(false);
         this.add(equals);
         
