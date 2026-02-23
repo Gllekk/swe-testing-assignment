@@ -239,17 +239,24 @@ public class Quick_Calc extends JFrame{
         //equals button action
         equals.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                BigDecimal num1 = new BigDecimal(numField1.getText());
-                BigDecimal num2 = new BigDecimal(numField2.getText());
+                
+                if (numField1.getText().equals("") || numField2.getText().equals("")) {
+                    okButtonDialog("One or Both Input Fields Are Empty!", "Please, Fill Both Fields Out!");
+                    return;
 
-                if (operator.equals("/") && num2.compareTo(BigDecimal.ZERO) == 0) {
-                    okButtonDialog("Division By Zero Is Undefined", "");
+                } else {
+                    BigDecimal num1 = new BigDecimal(numField1.getText());
+                    BigDecimal num2 = new BigDecimal(numField2.getText());
+
+                    if (operator.equals("/") && num2.compareTo(BigDecimal.ZERO) == 0) {
+                        okButtonDialog("Division By Zero Is Undefined", "");
+                        return;
+                    }
+
+                    BigDecimal result = calculate(operator, num1, num2);
+                    resultField.setText(result.stripTrailingZeros().toPlainString());
                     return;
                 }
-
-                BigDecimal result = calculate(operator, num1, num2);
-                resultField.setText(result.stripTrailingZeros().toPlainString());
-                return;
             }
 
             private BigDecimal calculate(String operator, BigDecimal n1, BigDecimal n2) {
