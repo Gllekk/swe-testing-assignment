@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -128,8 +127,7 @@ class Quick_Calc_Test {
                     ArithmeticException.class,
                     () -> CalculatorLogic.calculate("/", big(42), big(0))
             );
-            assertTrue(ex.getMessage().toLowerCase().contains("zero"),
-                    "Exception message should mention 'zero'");
+            assertTrue(ex.getMessage().toLowerCase().contains("zero"), "Exception message should mention 'zero'");
         }
 
         @Test
