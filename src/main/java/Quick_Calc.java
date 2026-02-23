@@ -256,8 +256,7 @@ public class Quick_Calc extends JFrame {
                     okButtonDialog("Only Integers Are Allowed!", "");
                     return;
 
-                } else if (numField1.getText().replaceFirst("^-", "").length() > 18
-                        || numField2.getText().replaceFirst("^-", "").length() > 18) {
+                } else if (numField1.getText().replaceFirst("^-", "").length() > 18 || numField2.getText().replaceFirst("^-", "").length() > 18) {
                     okButtonDialog("Only Integers Of Length Less", "Than 19 Are Allowed!");
                     return;
 
