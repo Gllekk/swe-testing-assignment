@@ -13,7 +13,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 
-
 public class Quick_Calc extends JFrame{
     private JFrame frame = this;
     private JLabel label;
@@ -110,7 +109,7 @@ public class Quick_Calc extends JFrame{
         numField1.setBackground(new Color(18, 33, 36));
         numField1.setBorder(border1);
         numField1.setCaretColor(new Color(207, 130, 162));
-        numField1.addFocusListener(new DigitLimitAndResetFocusListener(18));
+        numField1.addFocusListener(new DigitLimitAndResetFocusListener(19));
         this.add(numField1);
         
         //second numfield
@@ -122,7 +121,7 @@ public class Quick_Calc extends JFrame{
         numField2.setBackground(new Color(18, 33, 36));
         numField2.setBorder(border1);
         numField2.setCaretColor(new Color(207, 130, 162));
-        numField2.addFocusListener(new DigitLimitAndResetFocusListener(18));
+        numField2.addFocusListener(new DigitLimitAndResetFocusListener(19));
         this.add(numField2);
 
         //result field
@@ -247,13 +246,13 @@ public class Quick_Calc extends JFrame{
                     okButtonDialog("One or Both Input Fields Are Empty!", "Please, Fill Both Fields Out!");
                     return;
 
-                } else if (numField1.getText().matches(".*[^0-9].*") || numField2.getText().matches(".*[^0-9].*")) {
-                    numField1.setText(numField1.getText().replaceAll("[^0-9]", ""));
-                    numField2.setText(numField2.getText().replaceAll("[^0-9]", ""));
+                } else if (!numField1.getText().matches("^-?[0-9]+$") || !numField2.getText().matches("^-?[0-9]+$")) {
+                    numField1.setText(numField1.getText().replaceAll("[^0-9-]", "").replaceAll("(?<=.)-", ""));
+                    numField2.setText(numField2.getText().replaceAll("[^0-9-]", "").replaceAll("(?<=.)-", ""));
                     okButtonDialog("Only Integers Are Allowed!", "");
                     return;
 
-                } else if (numField1.getText().length() > 18 || numField2.getText().length() > 18) {
+                } else if (numField1.getText().replaceFirst("^-", "").length() > 18 || numField2.getText().replaceFirst("^-", "").length() > 18) {
                     okButtonDialog("Only Integers Of Length Less", "Than 19 Are Allowed!");
                     return;
 
