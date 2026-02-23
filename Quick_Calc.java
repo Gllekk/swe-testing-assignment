@@ -242,6 +242,11 @@ public class Quick_Calc extends JFrame{
                 BigDecimal num1 = new BigDecimal(numField1.getText());
                 BigDecimal num2 = new BigDecimal(numField2.getText());
 
+                if (operator.equals("/") && num2.compareTo(BigDecimal.ZERO) == 0) {
+                    okButtonDialog("Division By Zero Is Undefined", "");
+                    return;
+                }
+
                 BigDecimal result = calculate(operator, num1, num2);
                 resultField.setText(result.stripTrailingZeros().toPlainString());
                 return;
