@@ -90,7 +90,7 @@ public class Quick_Calc extends JFrame{
         });
 
         //top label
-        label = new JLabel("Enter The Numbers And Choose An Operator");
+        label = new JLabel("Enter The Integers And Choose An Operator");
         label.setBounds(1, 1, 286, 31);
         label.setFont(new Font("Impact", Font.PLAIN, 13));
         label.setForeground(new Color(130, 193, 206));
@@ -111,6 +111,7 @@ public class Quick_Calc extends JFrame{
         numField1.setBackground(new Color(18, 33, 36));
         numField1.setBorder(border1);
         numField1.setCaretColor(new Color(207, 130, 162));
+        numField1.addFocusListener(new DigitLimitAndResetFocusListener(18));
         this.add(numField1);
         
         //second numfield
@@ -122,6 +123,7 @@ public class Quick_Calc extends JFrame{
         numField2.setBackground(new Color(18, 33, 36));
         numField2.setBorder(border1);
         numField2.setCaretColor(new Color(207, 130, 162));
+        numField2.addFocusListener(new DigitLimitAndResetFocusListener(18));
         this.add(numField2);
 
         //result field
@@ -246,6 +248,10 @@ public class Quick_Calc extends JFrame{
                     okButtonDialog("One or Both Input Fields Are Empty!", "Please, Fill Both Fields Out!");
                     return;
 
+                } else if (numField1.getText().length() > 18 || numField2.getText().length() > 18) {
+                    okButtonDialog("Only Integers Of Length Less", "Than 19 Are Allowed!");
+                    return;
+
                 } else if (operator.equals("")) {
                     okButtonDialog("Please, Choose An Operator!", "");
                     return;
@@ -337,5 +343,32 @@ public class Quick_Calc extends JFrame{
 
     public static void main(String[] args) {
         new Quick_Calc();
+    }
+}
+
+
+// FocusListener for the input fields
+class DigitLimitAndResetFocusListener implements FocusListener {
+    private int limit;
+
+    public DigitLimitAndResetFocusListener(int limit) {
+        this.limit = limit;
+    }
+
+    @Override
+    public void focusGained(FocusEvent e) {
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        JFormattedTextField field = (JFormattedTextField) e.getSource();
+        String text = field.getText();
+        if (text.length() > limit) {
+            field.setText(text.substring(0, limit));
+
+        } else if (text.isEmpty()) {
+            field.setValue(null);
+
+        }
     }
 }
