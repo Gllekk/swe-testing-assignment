@@ -152,6 +152,113 @@ class Quick_Calc_Test {
         }
     }
 
+
+    // INTEGRATION TESTS 
+
+    @Nested
+    @DisplayName("Integration: UI and CalculatorLogic")
+    class IntegrationTests {
+
+        private Quick_Calc calc;
+
+        @BeforeEach
+        void setUp() throws Exception {
+            //create the hidden frame
+            AtomicReference<Quick_Calc> ref = new AtomicReference<>();
+            SwingUtilities.invokeAndWait(() -> ref.set(new Quick_Calc(false)));
+            calc = ref.get();
+        }
+
+        //dispose of the hidden frame
+        @AfterEach
+        void tearDown() throws Exception {
+            SwingUtilities.invokeAndWait(() -> {
+                if (calc != null) {
+                    calc.dispose();
+                }
+            });
+        }
+
+        //IT-1: simultes inputting 5 and 3, clicking the "Add" button, and clicking the "Calculte" button
+        @Test
+        @DisplayName("IT-1: Full addition workflow produces correct result in result field")
+        void integration_Addition() throws Exception {
+            SwingUtilities.invokeAndWait(() -> {
+                calc.getNumField1().setText("5");
+                calc.getNumField2().setText("3");
+                clickButton(calc.getAddButton());
+                clickButton(calc.getEqualsButton());
+            });
+
+            SwingUtilities.invokeAndWait(() -> {
+                assertEquals("8", calc.getResultField().getText(), "Result field should display '8' after adding 5 and 3");
+            });
+        }
+
+        //IT-2: simultes inputting 10 and 4, clicking the "Sub" button, clicking the "Calculte" button, and clicking the "Clear" button
+        @Test
+        @DisplayName("IT-2: Pressing CLEAR after a calculation resets all fields to empty")
+        void integration_clearResetsAllFields() throws Exception {
+            SwingUtilities.invokeAndWait(() -> {
+                calc.getNumField1().setText("10");
+                calc.getNumField2().setText("4");
+                clickButton(calc.getSubButton());
+                clickButton(calc.getEqualsButton());
+            });
+
+            //confirm the calculation result is correct
+            SwingUtilities.invokeAndWait(() ->
+                    assertEquals("6", calc.getResultField().getText()));
+
+            //clear and verify that all the fields are empty
+            SwingUtilities.invokeAndWait(() -> clickButton(calc.getClearButton()));
+
+            SwingUtilities.invokeAndWait(() -> {
+                assertEquals("", calc.getNumField1().getText(), "numField1 should be empty after CLEAR");
+                assertEquals("", calc.getNumField2().getText(), "numField2 should be empty after CLEAR");
+                assertEquals("", calc.getResultField().getText(), "resultField should be empty after CLEAR");
+            });
+        }
+
+        //IT-3: simultes inputting -8 and 3, clicking the "Mul" button, and clicking the "Calculte" button
+        @Test
+        @DisplayName("IT-3: Negative number flows through UI and calculation correctly")
+        void integration_negativeNumberMultiplication() throws Exception {
+            SwingUtilities.invokeAndWait(() -> {
+                calc.getNumField1().setText("-8");
+                calc.getNumField2().setText("3");
+                clickButton(calc.getMulButton());
+                clickButton(calc.getEqualsButton());
+            });
+
+            SwingUtilities.invokeAndWait(() ->
+                    assertEquals("-24", calc.getResultField().getText(), "Result field should display '-24' after -8 * 3"));
+        }
+
+        //IT-4: simultes inputting 16 and 15, clicking the "Div" button, and clicking the "Calculte" button
+        @Test
+        @DisplayName("IT-3: Negative number flows through UI and calculation correctly")
+        void integration_Division() throws Exception {
+            SwingUtilities.invokeAndWait(() -> {
+                calc.getNumField1().setText("16");
+                calc.getNumField2().setText("15");
+                clickButton(calc.getDivButton());
+                clickButton(calc.getEqualsButton());
+            });
+
+            SwingUtilities.invokeAndWait(() ->
+                    assertEquals("1.0666666667", calc.getResultField().getText(), "Result field should display '1.0666666667' after 16 / 15"));
+        }
+
+        //simulate a button press
+        private void clickButton(JButton button) {
+            button.getActionListeners()[0].actionPerformed(
+                    new ActionEvent(button, ActionEvent.ACTION_PERFORMED, button.getActionCommand())
+            );
+        }
+    }
+
+    //helper
     private static BigInteger big(long value) {
         return BigInteger.valueOf(value);
     }
