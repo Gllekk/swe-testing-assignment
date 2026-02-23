@@ -216,6 +216,15 @@ public class Quick_Calc extends JFrame{
         clear.setBackground(new Color(18, 33, 36));
         clear.setBorder(border1);
         clear.setFocusable(false);
+        clear.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                numField1.setText(null);
+                numField2.setText(null);
+                resultField.setText(null);
+
+                frame.requestFocusInWindow();
+            }
+        });
         this.add(clear);
         
         //equals button
