@@ -180,7 +180,7 @@ class Quick_Calc_Test {
         //IT-1: simultes inputting 5 and 3, clicking the "Add" button, and clicking the "Calculte" button
         @Test
         @DisplayName("IT-1: Full addition workflow produces correct result in result field")
-        void integration_Addition() throws Exception {
+        void integration_fullAddition() throws Exception {
             SwingUtilities.invokeAndWait(() -> {
                 calc.getNumField1().setText("5");
                 calc.getNumField2().setText("3");
@@ -234,8 +234,8 @@ class Quick_Calc_Test {
 
         //IT-4: simultes inputting 16 and 15, clicking the "Div" button, and clicking the "Calculte" button
         @Test
-        @DisplayName("IT-3: Negative number flows through UI and calculation correctly")
-        void integration_Division() throws Exception {
+        @DisplayName("IT-4: Division with a decimal result is performed and displayed correctly")
+        void integration_fullDivision() throws Exception {
             SwingUtilities.invokeAndWait(() -> {
                 calc.getNumField1().setText("16");
                 calc.getNumField2().setText("15");
