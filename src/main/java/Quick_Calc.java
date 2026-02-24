@@ -349,7 +349,7 @@ public class Quick_Calc extends JFrame {
 }
 
 
-//focusListener for the input fields
+//custom focusListener for the input fields
 class DigitLimitAndResetFocusListener implements FocusListener {
     private int limit;
 
