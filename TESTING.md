@@ -56,4 +56,4 @@ The test suite is written in a way that could support potential future regressio
 | 16 | `integration_fullAddition` | Integration | Pass |
 | 17 | `integration_clearResetsAllFields` | Integration | Pass |
 | 18 | `integration_negativeNumberMultiplication` | Integration | Pass |
-| 18 | `integration_fullDivision` | Integration | Pass |
+| 19 | `integration_fullDivision` | Integration | Pass |
